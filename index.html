@@ -441,7 +441,7 @@
          form.addEventListener('submit', e => {
              e.preventDefault();
              if(/^\S+@\S+\.\S+$/.test(document.getElementById('evalidate').value)){
-                 fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                 fetch(scriptURL, { method: 'POST', mode: 'cors', body: new FormData(form)})
                      .then(response => Swal.fire({type:"success", title:"You Are Ready to Receive Updates", text:"Keep both eyes on it"}))
                      .catch(error => Swal.fire({type:"error", title:"Error!", text:error.message}))
              } else {
