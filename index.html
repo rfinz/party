@@ -443,7 +443,7 @@
              if(/^\S+@\S+\.\S+$/.test(document.getElementById('evalidate').value)){
                  fetch(scriptURL, { method: 'POST', mode: 'cors', body: new FormData(form)})
                      .then(response => Swal.fire({type:"success", title:"You Are Ready to Receive Updates", text:"Keep both eyes on it"}))
-                     .catch(error => Swal.fire({type:"error", title:"Error!", text:"Something went wrong... do you have a privacy extension enabled?\n" + error.message}))
+                     .catch(error => Swal.fire({type:"error", title:"Error!", text:"Something went wrong... do you have a privacy extension enabled? - " + error.message}))
              } else {
                  Swal.fire({type:"error", title:"Sorry...", text:"That doesn't look like an email...."});
              }
