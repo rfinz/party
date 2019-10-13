@@ -81,10 +81,15 @@
              opacity: 1;
          }
      }
+     .helvetica { font-family: 'helvetica neue', helvetica, sans-serif; }
     </style>
+    <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+    <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+    <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   </head>
 
-  <body>
+  <body class="helvetica">
     <div class="mw5 mw7-ns center bg-light-gray pa3 ph5-ns">
       <svg
           xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -419,16 +424,31 @@
         </g>
       </svg>
       <div class="fade-in">
-        <form>
+        <form name="collect-email">
           <fieldset class="cf">
             <legend>Stay informed...</legend>
             <div class="cf">
               <label class="clip" for="email-address">Email Address</label>
-              <input class="input-reset w-100 w-75-m w-80-l" placeholder="your-email@emailplace.com" type="text" name="email-address" value="" id="email-address">
+              <input class="input-reset w-100 w-75-m w-80-l" placeholder="your-email@emailplace.com" type="text" name="email" id="evalidate" required>
               <input class="button-reset w-100 w-25-m w-20-l" type="submit" value="Subscribe">
             </div>
           </fieldset>
         </form>
+        <script>
+         const scriptURL = 'https://script.google.com/macros/s/AKfycbxaA_5UtLwrx_17eaZBYkk_isc6kiNQnnpeXXalsLfAxFJFB4FB/exec'
+         const form = document.forms['collect-email']
+
+         form.addEventListener('submit', e => {
+             e.preventDefault();
+             if(/^\S+@\S+\.\S+$/.test(document.getElementById('evalidate').value)){
+                 fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                     .then(response => Swal.fire({type:"success", title:"You Are Ready to Receive Updates", text:"Keep both eyes on it"}))
+                     .catch(error => Swal.fire({type:"error", title:"Error!", text:error.message}))
+             } else {
+                 Swal.fire({type:"error", title:"Sorry...", text:"That doesn't look like an email...."});
+             }
+         });
+        </script>
       </div>
     </div>
   </body>
